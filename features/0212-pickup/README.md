@@ -46,7 +46,6 @@ Status details about pending messages
     "@id": "123456781",
     "@type": "https://didcomm.org/messagepickup/1.0/status",
     "message_count": 7,
-    "duration_waited": 3600,
     "last_added_time": "2019-05-01 12:00:00Z",
     "last_delivered_time": "2019-05-01 12:00:01Z",
     "last_removed_time": "2019-05-01 12:00:01Z",
@@ -54,6 +53,14 @@ Status details about pending messages
 }
 ```
 `message_count` is the only required attribute. The others may be present if offered by the _message_holder_.
+
+- `message_count`: Total message count representing the all the stored message count (wether delivered or not)
+- `last_added_time`: A timestamp representing the last time any message stored by the _message_holder_
+- `last_delivered_time`: A timestamp representing the last time any message sent by the _message_holder_ to the _recipient_
+- `last_removed_time`: A timestamp representing the last time _recipient_ send delete request
+- `total_size`: Total message count representing the all the stored message count (wether delivered or not)
+- `size_limit`: The maximum message count which can be stored by the _message_holder_ (may be zero for no limit)
+
 ### Batch Pickup
 A request to have multiple waiting messages sent inside a `batch` message.
 ```json=
@@ -121,6 +128,39 @@ A response to query with message id list.
     ]
 }
 ```
+
+
+#### Delete Request
+Request message for informing the _message_holder_ for completed messages by the _recipient_ for delete.
+```json
+{
+  "@id": "356c6de8-d126-4812-92a2-9af3bdf1061e",
+  "@type": "https://didcomm.org/messagepickup/1.0/delete-request",
+  "message_ids": [
+        "06ca25f6-d3c5-48ac-8eee-1a9e29120c31",
+        "344a51cf-379f-40ab-ab2c-711dab3f53a9a"
+  ]
+}
+```
+
+`message_ids` Message id list for delete
+
+
+#### Delete Response
+Response message for acknowledging the _recipient_ for successfully deleted messages by the _message_holder_ upon a request.
+```json
+{
+  "@id": "356c6de8-d126-4812-92a2-9af3bdf1061e",
+  "@type": "https://didcomm.org/messagepickup/1.0/delete-response",
+  "message_ids": [
+        "06ca25f6-d3c5-48ac-8eee-1a9e29120c31",
+        "344a51cf-379f-40ab-ab2c-711dab3f53a9a"
+  ]
+}
+```
+
+`message_ids` Deleted message id list.
+
 ### Noop
 Used to receive another message implicitly. This message has no expected behavior when received.
 ```json=
