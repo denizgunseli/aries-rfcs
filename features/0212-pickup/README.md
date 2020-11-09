@@ -49,7 +49,8 @@ Status details about pending messages
     "last_added_time": "2019-05-01 12:00:00Z",
     "last_delivered_time": "2019-05-01 12:00:01Z",
     "last_removed_time": "2019-05-01 12:00:01Z",
-    "total_size": 8096
+    "total_size": 8096,
+    "size_limit": 16192
 }
 ```
 `message_count` is the only required attribute. The others may be present if offered by the _message_holder_.
